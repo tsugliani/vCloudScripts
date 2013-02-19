@@ -1,4 +1,4 @@
-vCloudScripts
-=============
+vCloud Scripts
+==============
 
-vCloud Director related scripts (PowerCli / Python)
+More information here: http://tsugliani.github.com/vCloudScripts
