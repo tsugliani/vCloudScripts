@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Vcloudscripts by tsugliani</title>
+    <title>vCloud Scripts by tsugliani</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -22,7 +22,6 @@
         <nav>
           <li class="fork"><a href="https://github.com/tsugliani/vCloudScripts">View On GitHub</a></li>
           <li class="downloads"><a href="https://github.com/tsugliani/vCloudScripts/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/tsugliani/vCloudScripts/tarball/master">TAR</a></li>
           <li class="title">DOWNLOADS</li>
         </nav>
       </div><!-- end header -->
@@ -31,39 +30,53 @@
 
       <section>
         <div id="title">
-          <h1>Vcloudscripts</h1>
-          <p>vCloud Director related scripts (PowerCli / Python)</p>
+          <h1>vCloud Scripts</h1>
+          <p>vCloud Director related scripts (PowerCLI / Python)</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/tsugliani">tsugliani</a></span>
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
         </div>
 
-        <h3>Welcome to GitHub Pages.</h3>
+      <p>Small repository with some VMware / vCloud Director related scripts</p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+      <h2>Show-vCloudStats.ps1</h2>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+      <p>
+        Powershell / PowerCLI script to give you an overview of the resources
+        consumed/allocated in vCloud Director environment. <br />
+        This script was designed to be used by vCloud System Administrators
+      </p>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+      <h3>Screenshot</h3>
+      <img src="https://github.com/tsugliani/vCloudScripts/raw/gh-pages/images/Show-vCloudStats-1.png">
+      
+      <h3>Requirements / Pre-requisites</h3>
+      <p>This script will require the following components:
+      <ol>
+        <li>Windows PowerShell 2.0+</li>
+        <li><a href="http://communities.vmware.com/community/vmtn/server/vsphere/automationtools/powercli">VMware vSphere™ PowerCLI</a></li>
+        <li>vCloud Director 1.5/5.1+ and vCloud System Administrator credentials</li>
+      </ol>
 
-<h3>Designer Templates</h3>
+      </p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
 
-<h3>Rather Drive Stick?</h3>
+      <h3>Usage</h3>
+      <p>Simply launch the script from the PowerCli command line, the vCloud Director instance and credentials will be asked interactively.</p>
+      <pre><code>PowerCLI DRIVE:\PathToScript> Show-vCloudStats.ps1</code></pre>
+      <p>Feel free to fork this repository and improve the scripts !</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+      <h2>Authors and Contributors</h2>
+      <p>
+        Author: Timo Sugliani | <a href="http://blog.tsugliani.fr">Blog</a> | <a href="http://www.twitter.com/tsugliani">Twitter</a><br />
+        Contributors: Frederic Martin | <a href="http://www.vmdude.fr/en/">Blog</a> | <a href="http://www.twitter.com/vmdude_fr">Twitter</a><br />
+      </p>
 
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+      <h2>Support or Contact</h2>
+      <p>
+        Having trouble with the scripts within this repository ? <br />
+        Contact me on twitter: <a href="http://www.twitter.com/tsugliani">tsugliani</a> and I’ll help you sort it out.
+      </p>
       </section>
 
     </div>
