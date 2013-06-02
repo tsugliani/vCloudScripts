@@ -54,23 +54,75 @@
       <p>This script will require the following components:
       <ol>
         <li>Windows PowerShell 2.0+</li>
-        <li><a href="http://communities.vmware.com/community/vmtn/server/vsphere/automationtools/powercli">VMware vSphere™ PowerCLI</a></li>
+        <li><a href="https://my.vmware.com/group/vmware/details?downloadGroup=VSP510-PCLI-510&productId=285">VMware vSphere™ PowerCLI 5.1.0 R1</a> (<text style="color:red;">Warning:</text> 5.1.0 R2 has a major metric storage issue with vCloud Director)</li>
         <li>vCloud Director 1.5/5.1+ and vCloud System Administrator credentials</li>
       </ol>
 
       </p>
-
 
       <h3>Usage</h3>
       <p>Simply launch the script from the PowerCLI prompt, the vCloud Director instance and credentials will be asked interactively.</p>
       <pre><code>PowerCLI DRIVE:\PathToScript> Show-vCloudStats.ps1</code></pre>
       <p>Feel free to fork this repository and improve the scripts !</p>
 
+      <h3>Issues</h3>
+      <p>
+        <text style="color:red;">WARNING:</text> 
+        Unfortunately VMware PowerCLI 5.1.0 R2 has a critical bug with vCloud Director. (Storage metrics are invalid)<br />
+        To use this script you need the previous version of PowerCLI available here : 
+        <a href="https://my.vmware.com/group/vmware/details?downloadGroup=VSP510-PCLI-510&productId=285">VMware vSphere™ PowerCLI 5.1.0 R1</a>
+      </p>
+
       <h2>Authors and Contributors</h2>
       <p>
         Author: Timo Sugliani | <a href="http://blog.tsugliani.fr">Blog</a> | <a href="http://www.twitter.com/tsugliani">Twitter</a><br />
         Contributors: <br />
         - Frederic Martin | <a href="http://www.vmdude.fr/en/">Blog</a> | <a href="http://www.twitter.com/vmdude_fr">Twitter</a><br />
+      </p>
+      <hr>
+      <h2>Show-vCloudStatsHtml.ps1</h2>
+
+      <p>
+        Powershell / PowerCLI script to give you an overview of the resources
+        consumed/allocated in vCloud Director environment and generate an HTML 
+        report on the current user desktop.<br />
+        This script was designed to be used by vCloud System Administrators
+      </p>
+
+      <h3>Screenshot</h3>
+      <img src="https://github.com/tsugliani/vCloudScripts/raw/gh-pages/images/Show-vCloudStatsHtml-1.png" width="737">
+      
+      <h3>Requirements / Pre-requisites</h3>
+      <p>This script will require the following components:
+      <ol>
+        <li>Windows PowerShell 2.0+</li>
+        <li><a href="https://my.vmware.com/group/vmware/details?downloadGroup=VSP510-PCLI-510&productId=285">VMware vSphere™ PowerCLI 5.1.0 R1</a> (<text style="color:red;">Warning:</text> 5.1.0 R2 has a major metric storage issue with vCloud Director)</li>
+        <li>vCloud Director 1.5/5.1+ and vCloud System Administrator credentials</li>
+      </ol>
+
+      </p>
+
+      <h3>Usage</h3>
+      <p>Simply launch the script from the PowerCLI prompt, the vCloud Director instance and credentials will be asked interactively.</p>
+      <pre><code>PowerCLI DRIVE:\PathToScript> Show-vCloudStatsHTML.ps1</code></pre>
+      <p>The HTML report will be created on the user's desktop ($HOME\Desktop)</p>
+      <p>Feel free to fork this repository and improve the scripts !</p>
+
+      <h2>Authors and Contributors</h2>
+      <p>
+        Author: Timo Sugliani | <a href="http://blog.tsugliani.fr">Blog</a> | <a href="http://www.twitter.com/tsugliani">Twitter</a><br />
+        Contributors: <br />
+        - Catalin Rosu | <a href="http://www.red-team-design.com/stylish-css3-progress-bars">Blog</a> | <a href="http://twitter.com/catalinred">Twitter</a><br />
+      </p>
+      </p>
+
+
+      <h3>Issues</h3>
+      <p>
+        <text style="color:red;">WARNING:</text> 
+        Unfortunately VMware PowerCLI 5.1.0 R2 has a critical bug with vCloud Director. (Storage metrics are invalid)<br />
+        To use this script you need the previous version of PowerCLI available here : 
+        <a href="https://my.vmware.com/group/vmware/details?downloadGroup=VSP510-PCLI-510&productId=285">VMware vSphere™ PowerCLI 5.1.0 R1</a>
       </p>
 
       <h2>Support or Contact</h2>
