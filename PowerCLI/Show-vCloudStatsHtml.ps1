@@ -369,6 +369,20 @@ function Show-GuaranteeGraph($percent, $text) {
     Add-content $htmlFilename -value $htmlFile 
 }
 
+function Get-VMStats($OrganizationVDC) {
+    $OvDCVMsTotal           = ((Get-CIVM -OrgVdc $OrganizationVDC) | measure).Count
+    if (!$OvDCVMsTotal) { $OvDCVMsTotal = 0 }
+
+    $OvDCVMsRunning         = ((Get-CIVM -OrgVdc $OrganizationVDC) | ?{ $_.Status -eq "PoweredOn"} | measure).Count
+    if (!$OvDCVMsRunning) { $OvDCVMsRunning = 0 }
+
+    $VMStats = New-Object PsObject
+    $VMStats | Add-Member -type NoteProperty -name VMsRunning -value $OvDCVMsRunning
+    $VMStats | Add-Member -type NoteProperty -name VMsTotal -value $OvDCVMsTotal
+
+    return $VMStats
+}
+
 function Show-VMStats($OrganizationVDC) {
     # Show VM stats (nb of VMs, VMs running against Quota)
 
@@ -468,7 +482,7 @@ function Show-ProviderVDCStats($ProviderVDC) {
     $StorageAllocated   = [math]::Round($ProviderVDC.StorageAllocatedGB, 2)
     $StorageUsed        = [math]::Round($ProviderVDC.StorageUsedGB, 2)
     $StorageTotal       = [math]::Round($ProviderVDC.StorageTotalGB, 2)
-    
+
     Add-content $htmlFilename -value "<h5>Resources Used & Allocated vs Total</h5>"
     
     $text = "CPU Used | Total [$($CpuUsed)Ghz | $($CpuTotal)Ghz]"
@@ -485,6 +499,25 @@ function Show-ProviderVDCStats($ProviderVDC) {
     Show-PercentageGraph ($StorageUsed/$StorageTotal*100) $text
     $text = "Storage Allocated [$($StorageAllocated)GB]"
     Show-GuaranteeGraph ($StorageAllocated/$StorageTotal*100) $text
+
+    # Fetch All Organization VDC in the current Provider VDC.
+    $OvDCs = Get-OrgVdc -ProviderVdc $PvDC
+    
+    $PvDCTotalVMs = 0
+    $PvDCTotalVMsRunning = 0
+
+    foreach ($OvDC in $OvDCs) {
+        # Fetch VMs Stats in each Org vDC
+        $OvDCVMStats = Get-VMStats $OvDC
+
+        $PvDCTotalVMsRunning += $OvDCVMStats.VMsRunning
+        $PvDCTotalVMs += $OvDCVMStats.VMsTotal
+    }
+    
+    if ($PvDCTotalVMs -gt 0) { 
+        $text = "VMs Running | Total [$($PvDCTotalVMsRunning)VMs | $($PvDCTotalVMs)VMs]"
+        Show-PercentageGraph ($PvDCTotalVMsRunning/$PvDCTotalVMs*100) $text
+    }
 }
 
 function Show-AllocationModelPAYGStats($OrganizationVDC, $ProviderVDC) {
@@ -667,11 +700,11 @@ if ((Get-PowerCLIVersion).SnapinVersions[2].Build -gt 793505)
     Write-Host "Unfortunately VMware PowerCLI 5.1.0 R2 has a critical bug & vCloud Director. (Storage metrics are invalid)"
     Write-Host "To use this script you need the previous version of PowerCLI available here :"
     Write-Host "https://my.vmware.com/group/vmware/details?downloadGroup=VSP510-PCLI-510&productId=285"
-    exit 1    
+    exit 1
 }
 
 # Connect to vCloud Director as System Administrator
-Connect-CIServer 
+Connect-CIServer
 
 # Create filename accordingly 
 $htmlFilename = $home+"\Desktop\Show-vCloudStats-"+$global:DefaultCIServers[0].Name+".html"
