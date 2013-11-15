@@ -13,6 +13,10 @@
 #
 # Changelog
 #
+# 15/11/2013 - Version 1.2
+# Added a new feature:
+# - Number of VMs running vs Total VMs at the Provider VDC level
+#
 # 06/02/2013 - Version 1.1
 # Added some new features:
 # - Number of networks used per Org VDC vs allocation of network
