@@ -1,6 +1,6 @@
 # 
 # Name: Show-vCloudStatsHtml.ps1
-# Version: 1.1
+# Version: 1.2
 # Author: Timo Sugliani <timo.sugliani@gmail.com>
 # Date: 19/05/2013
 #
