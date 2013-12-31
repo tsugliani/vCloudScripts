@@ -1,6 +1,6 @@
 # 
 # Name: Show-vCloudStatsHtml.ps1
-# Version: 1.2
+# Version: 1.3
 # Author: Timo Sugliani <timo.sugliani@gmail.com>
 # Date: 19/05/2013
 #
@@ -12,6 +12,11 @@
 # Have been slightly modified to create guarantee bars under the progress bars.
 #
 # Changelog
+#
+# 31/12/2013 - Version 1.3
+# Fixes:
+# - Fix Storage profile issue (ignored when StorageTotal == 0)
+# - Fix PowerCLI 5.5 R1 launch issue.
 #
 # 15/11/2013 - Version 1.2
 # Added a new feature:
@@ -450,7 +455,11 @@ function Show-StorageStats($storageUsed, $Storageallocated, $StorageTotal) {
     if ($StorageAllocated -eq 0) {
         $text = " Storage Used | PvDC Total Storage (No Quota) "
         $text += "- [$($StorageUsed)GB | $($StorageTotal)GB]"
-        Show-PercentageGraph ($StorageUsed/$StorageTotal*100) $text
+        
+        # Storage Profile Storage Metric issue
+        if ($StorageTotal -ne 0) {
+            Show-PercentageGraph ($StorageUsed/$StorageTotal*100) $text
+        }
     }
     else {
         $text = " Storage Used | Allocated Quota "
@@ -498,11 +507,15 @@ function Show-ProviderVDCStats($ProviderVDC) {
     Show-PercentageGraph ($MemUsed/$MemTotal*100) $text
     $text = "MEM Allocated [$($MemAllocated)GB]"
     Show-GuaranteeGraph ($MemAllocated/$MemTotal*100) $text
-    
-    $text = "Storage Used | Total [$($StorageUsed)GB | $($StorageTotal)GB]" 
-    Show-PercentageGraph ($StorageUsed/$StorageTotal*100) $text
-    $text = "Storage Allocated [$($StorageAllocated)GB]"
-    Show-GuaranteeGraph ($StorageAllocated/$StorageTotal*100) $text
+
+    # Storage Profile Storage Metric issue
+    if ($StorageTotal -ne 0) {
+        $text = "Storage Used | Total [$($StorageUsed)GB | $($StorageTotal)GB]" 
+        Show-PercentageGraph ($StorageUsed/$StorageTotal*100) $text
+       
+        $text = "Storage Allocated [$($StorageAllocated)GB]"
+        Show-GuaranteeGraph ($StorageAllocated/$StorageTotal*100) $text
+    }    
 
     # Fetch All Organization VDC in the current Provider VDC.
     $OvDCs = Get-OrgVdc -ProviderVdc $PvDC
@@ -698,13 +711,13 @@ function Show-OrganizationVDCStats($OrganizationVDC, $ProviderVDC) {
     }
 }
 
+# Get PowerCLI version
+$PowerCLIVersion = (Get-PowerCLIVersion).SnapinVersions[2].Build
 
-if ((Get-PowerCLIVersion).SnapinVersions[2].Build -gt 793505)
+if ($PowerCLIVersion -gt 793505)
 {
-    Write-Host "Unfortunately VMware PowerCLI 5.1.0 R2 has a critical bug & vCloud Director. (Storage metrics are invalid)"
-    Write-Host "To use this script you need the previous version of PowerCLI available here :"
-    Write-Host "https://my.vmware.com/group/vmware/details?downloadGroup=VSP510-PCLI-510&productId=285"
-    exit 1
+    Write-Host "Unfortunately VMware PowerCLI 5.1.0 R2 and newer versions have an issue with Storage metrics that are invalid (Storage Profiles)"
+    Write-Host "Those metrics will be ignored, and hence the report might be a bit less complete."
 }
 
 # Connect to vCloud Director as System Administrator
